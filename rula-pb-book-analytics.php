@@ -6,7 +6,7 @@
  * Author URI: https://github.com/ryersonlibrary
  * Description: Enables book level analytics for Pressbooks on a subdirectory installation (Pressbooks only supports this on subdomain installations).
  * GitHub Plugin URI: https://github.com/ryersonlibrary/rula_pb_book_analytics
- * Version: 0.0.1
+ * Version: 0.0.2
  */
 
 function rula_pb_add_book_analytics_menu() {
@@ -87,6 +87,11 @@ function rula_pb_print_analytics() {
     echo $html;
   }
 }
+
+function rula_pb_download_tracking_code( $tracking, $filetype ) {
+  return "ga('send','event','exportFiles','Downloads','{$filetype}'); ga('bookTracker.send','event','exportFiles','Downloads','{$filetype}');";
+}
+add_filter('pressbooks_download_tracking_code', 'rula_pb_download_tracking_code', 10, 2);
 
 add_action( 'admin_menu', 'rula_pb_add_book_analytics_menu' );
 add_action( 'admin_init', 'rula_pb_book_analytics_settings_init' );

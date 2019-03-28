@@ -88,10 +88,11 @@ function rula_pb_print_analytics() {
   }
 }
 
-function rula_pb_download_tracking_code( $tracking, $filetype ) {
-  return "ga('send','event','exportFiles','Downloads','{$filetype}'); ga('bookTracker.send','event','exportFiles','Downloads','{$filetype}');";
+function rula_pb_download_tracking_code( $tracking, $filetype, $title ) {
+  $tracking .= "ga('bookTracker.send','event','exportFiles','Downloads','{$title}:{$filetype}');";
+  return $tracking;
 }
-add_filter('pressbooks_download_tracking_code', 'rula_pb_download_tracking_code', 10, 2);
+add_filter('pressbooks_download_tracking_code', 'rula_pb_download_tracking_code', 10, 3);
 
 add_action( 'admin_menu', 'rula_pb_add_book_analytics_menu' );
 add_action( 'admin_init', 'rula_pb_book_analytics_settings_init' );
